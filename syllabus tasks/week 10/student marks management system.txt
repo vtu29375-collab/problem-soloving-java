@@ -1,0 +1,29 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        ArrayList<Integer> marks = new ArrayList<>();
+
+        System.out.println("Enter marks (-1 to stop):");
+
+        while (true) {
+            int mark = sc.nextInt();
+
+            if (mark == -1) {
+                break;
+            }
+
+            marks.add(mark);
+        }
+
+        System.out.println("Student Marks:");
+
+        for (int mark : marks) {
+            System.out.println(mark);
+        }
+
+        sc.close();
+    }
+}
