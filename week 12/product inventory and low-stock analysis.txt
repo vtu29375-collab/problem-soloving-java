@@ -1,0 +1,93 @@
+import java.util.*;
+
+class Product {
+    int id;
+    String name;
+    int stock;
+    double price;
+
+    Product(int id, String name, int stock, double price) {
+        this.id = id;
+        this.name = name;
+        this.stock = stock;
+        this.price = price;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        HashMap<Integer, Product> products = new HashMap<>();
+
+        System.out.println("Enter number of products:");
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            int id = sc.nextInt();
+            String name = sc.next();
+            int stock = sc.nextInt();
+            double price = sc.nextDouble();
+
+            products.put(id, new Product(id, name, stock, price));
+        }
+
+        System.out.println("Enter product ID to update stock:");
+        int searchId = sc.nextInt();
+
+        if (products.containsKey(searchId)) {
+            Product p = products.get(searchId);
+
+            System.out.println("Enter quantity sold:");
+            int sold = sc.nextInt();
+
+            if (sold >= 0 && sold <= p.stock) {
+                p.stock -= sold;
+                System.out.println("Stock updated: " + p.stock);
+            } else {
+                System.out.println("Invalid quantity");
+            }
+        } else {
+            System.out.println("Product not found");
+        }
+
+        System.out.println("Enter stock threshold:");
+        int threshold = sc.nextInt();
+
+        System.out.println("Low-stock products:");
+
+        for (Product p : products.values()) {
+            if (p.stock < threshold) {
+                System.out.println(p.id + " " + p.name + " " + p.stock);
+            }
+        }
+
+        ArrayList<Product> list = new ArrayList<>(products.values());
+
+        list.sort((a, b) -> Integer.compare(a.stock, b.stock));
+
+        System.out.println("Products sorted by remaining stock:");
+
+        for (Product p : list) {
+            System.out.println(
+                p.id + " " + p.name + " " + p.stock + " " + p.price
+            );
+        }
+
+        System.out.println("Enter product ID to search:");
+        int id = sc.nextInt();
+
+        if (products.containsKey(id)) {
+            Product p = products.get(id);
+
+            System.out.println("Product ID: " + p.id);
+            System.out.println("Product Name: " + p.name);
+            System.out.println("Stock: " + p.stock);
+            System.out.println("Price: " + p.price);
+        } else {
+            System.out.println("Product not found");
+        }
+
+        sc.close();
+    }
+}

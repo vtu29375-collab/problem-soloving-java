@@ -1,0 +1,102 @@
+import java.util.*;
+
+class Node {
+    String song;
+    Node next;
+
+    Node(String song) {
+        this.song = song;
+        this.next = null;
+    }
+}
+
+class Playlist {
+    Node head;
+
+    void addSong(String song) {
+        Node newNode = new Node(song);
+
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node temp = head;
+
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+
+            temp.next = newNode;
+        }
+    }
+
+    void removeSong(String song) {
+        if (head == null) {
+            System.out.println("Playlist is empty");
+            return;
+        }
+
+        if (head.song.equals(song)) {
+            head = head.next;
+            System.out.println("Song removed: " + song);
+            return;
+        }
+
+        Node temp = head;
+
+        while (temp.next != null &&
+               !temp.next.song.equals(song)) {
+            temp = temp.next;
+        }
+
+        if (temp.next != null) {
+            temp.next = temp.next.next;
+            System.out.println("Song removed: " + song);
+        } else {
+            System.out.println("Song not found");
+        }
+    }
+
+    void display() {
+        Node temp = head;
+
+        if (temp == null) {
+            System.out.println("Playlist is empty");
+            return;
+        }
+
+        System.out.println("Music Playlist:");
+
+        while (temp != null) {
+            System.out.println(temp.song);
+            temp = temp.next;
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Playlist playlist = new Playlist();
+
+        System.out.println("Enter number of songs:");
+        int n = sc.nextInt();
+        sc.nextLine();
+
+        for (int i = 0; i < n; i++) {
+            System.out.println("Enter song name:");
+            String song = sc.nextLine();
+            playlist.addSong(song);
+        }
+
+        playlist.display();
+
+        System.out.println("Enter song to remove:");
+        String remove = sc.nextLine();
+
+        playlist.removeSong(remove);
+
+        playlist.display();
+
+        sc.close();
+    }
+}
